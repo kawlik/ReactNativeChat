@@ -1,20 +1,57 @@
-import { StatusBar } from 'expo-status-bar';
-import { StyleSheet, Text, View } from 'react-native';
+import { NavigationContainer } from '@react-navigation/native';
+import { createNativeStackNavigator } from '@react-navigation/native-stack';
+import { onAuthStateChanged, User } from 'firebase/auth';
+import { useEffect, useState } from 'react';
+import { SafeAreaProvider } from 'react-native-safe-area-context';
+import { Home, SignIn, SignUp } from './src/screens/@';
+import { FirebaseService } from './src/services/@';
 
+
+/*  Initialize navigation stack
+/*   *   *   *   *   *   *   *   *   *   */
+const Stack = createNativeStackNavigator();
+
+
+/*  Component logic
+/*   *   *   *   *   *   *   *   *   *   */
 export default function App() {
-    return (
-        <View style={styles.container}>
-            <Text>Open up App.tsx to start working on your app!</Text>
-            <StatusBar style="auto" />
-        </View>
-    );
-}
 
-const styles = StyleSheet.create({
-    container: {
-        flex: 1,
-        backgroundColor: '#fff',
-        alignItems: 'center',
-        justifyContent: 'center',
-    },
-});
+
+    //  use user state
+    const [ user, setUser ] = useState<User|null>( null );
+
+
+    //  use effects
+    useEffect(() => {
+
+        const unsubscribeAuthStateChanged = onAuthStateChanged( FirebaseService.Auth, ( user ) => setUser( user ));
+
+    return () => {
+
+        unsubscribeAuthStateChanged();
+
+    }}, []);
+
+
+/*  Component layout
+/*   *   *   *   *   *   *   *   *   *   */
+return (
+<SafeAreaProvider>
+<NavigationContainer>
+<Stack.Navigator screenOptions={{
+    headerShown: false,
+}}>
+{
+    !!user
+    ?   <>
+        <Stack.Screen name='signed' component={ Home } />
+    </>
+    :   <>
+        <Stack.Screen name='signIn' component={ SignIn } />
+        <Stack.Screen name='signUp' component={ SignUp } />
+    </>
+}
+</Stack.Navigator>
+</NavigationContainer>
+</SafeAreaProvider>
+)}

@@ -1,0 +1,1 @@
+export { default as FirebaseApp } from './firebase.config';
