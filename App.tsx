@@ -44,11 +44,11 @@ return (
 {
     !!user
     ?   <>
-        <Stack.Screen name='signed' component={ Home } />
+        <Stack.Screen name='Home' component={ Home } />
     </>
     :   <>
-        <Stack.Screen name='signIn' component={ SignIn } />
-        <Stack.Screen name='signUp' component={ SignUp } />
+        <Stack.Screen name='SignIn' component={ SignIn } />
+        <Stack.Screen name='SignUp' component={ SignUp } />
     </>
 }
 </Stack.Navigator>
