@@ -2,7 +2,8 @@ import { NativeStackScreenProps } from '@react-navigation/native-stack';
 import { useState } from 'react';
 import { Button, Text, TextInput, TouchableOpacity, View } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
-
+import { MaterialCommunityIcons } from '@expo/vector-icons';
+import { FirebaseService } from '../services/@';
 
 /*  Component logic
 /*   *   *   *   *   *   *   *   *   *   */
@@ -14,6 +15,11 @@ export default function ( prop: NativeStackScreenProps<any, 'SignIn'> ) {
 
     //  use guard
     const isValid = ( !!email && !!passw );
+
+    //  use firebase service
+    const tryAuth = async () => {
+        FirebaseService.signIn( email, passw );
+    }
 
 
 /*  Component layout
@@ -29,8 +35,10 @@ return (
 
     <Text style={{
         fontSize: 28,
-        color: 'green',
-    }} >{ 'Welcome back! 👋' }</Text>
+        color: 'grey',
+    }} >
+        Welcome back! <MaterialCommunityIcons name='hand-wave-outline' size={28} color='green' />
+    </Text>
 
     <View style={{
         marginVertical: 20,
@@ -53,6 +61,7 @@ return (
 
         <TextInput
             value={ passw }
+            secureTextEntry={ true }
             onChangeText={ setPassw }
             placeholder='Password'
             style={{
@@ -66,6 +75,7 @@ return (
         <View style={{ marginTop: 20 }} >
         <Button
             disabled={ !isValid }
+            onPress={ tryAuth }
             title='Sign In'
             color='green'
         />

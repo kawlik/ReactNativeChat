@@ -1,10 +1,10 @@
 import { NavigationContainer } from '@react-navigation/native';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
-import { onAuthStateChanged, User } from 'firebase/auth';
-import { useEffect, useState } from 'react';
+import { StatusBar } from 'expo-status-bar';
 import { SafeAreaProvider } from 'react-native-safe-area-context';
-import { Home, SignIn, SignUp } from './src/screens/@';
-import { FirebaseService } from './src/services/@';
+import { AppProvider, useAppContext } from './src/contexts/@';
+import { Home, Profile, SignIn, SignUp } from './src/screens/@';
+import firebaseService from './src/services/firebase.service';
 
 
 /*  Initialize navigation stack
@@ -14,37 +14,23 @@ const Stack = createNativeStackNavigator();
 
 /*  Component logic
 /*   *   *   *   *   *   *   *   *   *   */
-export default function App() {
+export function App() {
 
-
-    //  use user state
-    const [ user, setUser ] = useState<User|null>( null );
-
-
-    //  use effects
-    useEffect(() => {
-
-        const unsubscribeAuthStateChanged = onAuthStateChanged( FirebaseService.Auth, ( user ) => setUser( user ));
-
-    return () => {
-
-        unsubscribeAuthStateChanged();
-
-    }}, []);
-
+    //  use context
+    const { user } = useAppContext();
+    
 
 /*  Component layout
 /*   *   *   *   *   *   *   *   *   *   */
 return (
-<SafeAreaProvider>
-<NavigationContainer>
 <Stack.Navigator screenOptions={{
     headerShown: false,
 }}>
 {
     !!user
     ?   <>
-        <Stack.Screen name='Home' component={ Home } />
+        {/* <Stack.Screen name='Home' component={ Home } /> */}
+        <Stack.Screen name='Profile' component={ Profile } />
     </>
     :   <>
         <Stack.Screen name='SignIn' component={ SignIn } />
@@ -52,6 +38,22 @@ return (
     </>
 }
 </Stack.Navigator>
+)}
+
+
+/*  App buildier
+/*   *   *   *   *   *   *   *   *   *   */
+export default function () {
+return(
+<AppProvider>
+<SafeAreaProvider>
+<NavigationContainer>
+
+    <StatusBar style='auto' />
+
+    <App />
+
 </NavigationContainer>
 </SafeAreaProvider>
+</AppProvider>
 )}
