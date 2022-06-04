@@ -1,7 +1,10 @@
-import { Image, Text, TextInput, TouchableOpacity } from 'react-native';
+import { useState } from 'react';
+import { Button, Image, Text, TextInput, TouchableOpacity, View } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { MaterialIcons, AntDesign } from '@expo/vector-icons';
+import { ImageInfo, ImagePickerCancelledResult } from 'expo-image-picker';
 import { useAppContext } from '../contexts/@';
+import { SystemService } from '../services/@';
 
 
 /*  Component logic
@@ -10,6 +13,15 @@ export default function () {
 
     //  use context
     const { user } = useAppContext();
+
+    //  use state
+    const [ name, setName ] = useState( '' );
+    const [ pict, setPict ] = useState( '' );
+
+    //  utils
+    const pickImage = async () => {
+        SystemService.pickInage().then( res => !res.cancelled && setPict( res.uri ));
+    }
 
 
 /*  Component layout
@@ -37,22 +49,66 @@ return (
         color: 'grey',
     }} >{ 'Please provide your name, and verify your email.' }</Text>
 
-    <TouchableOpacity style={{
-        margin: 25,
-        padding: 25,
-        borderRadius: 100,
-        backgroundColor: 'lightgrey',
-        justifyContent: 'center',
-        alignContent: 'center',
-        alignItems: 'center',
-        aspectRatio: 1
+    <TouchableOpacity
+        onPress={ pickImage }
+        style={{
+            padding: !!pict ? 0 : 40,
+            marginVertical: !!pict ? 25 : 35,
+            aspectRatio: 1,
+            borderRadius: 100,
+            backgroundColor: 'lightgrey',
+            justifyContent: 'center',
+            alignContent: 'center',
+            alignItems: 'center',
     }} >
     {
-        !!user?.photoURL
-        ?   <Image source={{ uri: user.photoURL }} style={{ aspectRatio: 1, }} />
-        :   <MaterialIcons name='add-a-photo' size={36} color='grey' />
+        !!pict
+        ?   <Image source={{ uri: pict }} style={{ width: 192, height: 192, borderRadius: 100 }} />
+        :   <MaterialIcons name='add-a-photo' size={72} color='grey' />
     }
     </TouchableOpacity>
+
+    <View style={{
+        marginVertical: 10,
+        justifyContent: 'center',
+        alignContent: 'stretch',
+        alignItems: 'stretch',
+    }} >
+
+        <TextInput
+            value={ name }
+            onChangeText={ setName }
+            placeholder='Your name'
+            style={{
+                borderBottomWidth: 1,
+                borderColor: 'green',
+                padding: 5,
+                width: 260,
+            }}
+        />
+
+        <TextInput
+            value={ user?.email || '' }
+            editable={ false }
+            placeholder='Your email'
+            style={{
+                borderBottomWidth: 1,
+                borderColor: 'green',
+                padding: 5,
+                width: 260,
+            }}
+        />
+
+        <View style={{ marginTop: 20 }} >
+        <Button
+            disabled={ !name || !pict }
+            onPress={ () => {} }
+            title='Next'
+            color='green'
+        />
+        </View>
+
+    </View>
 
 </SafeAreaView>
 )}
