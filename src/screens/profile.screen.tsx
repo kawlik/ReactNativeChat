@@ -52,10 +52,11 @@ return (
     <TouchableOpacity
         onPress={ pickImage }
         style={{
-            padding: !!pict ? 0 : 40,
-            marginVertical: !!pict ? 25 : 35,
+            width: 192,
+            height: 192,
             aspectRatio: 1,
             borderRadius: 100,
+            marginVertical: 25,
             backgroundColor: 'lightgrey',
             justifyContent: 'center',
             alignContent: 'center',
