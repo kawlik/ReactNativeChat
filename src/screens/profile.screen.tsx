@@ -2,9 +2,10 @@ import { useState } from 'react';
 import { Button, Image, Text, TextInput, TouchableOpacity, View } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { MaterialIcons, AntDesign } from '@expo/vector-icons';
-import { ImageInfo, ImagePickerCancelledResult } from 'expo-image-picker';
 import { useAppContext } from '../contexts/@';
-import { SystemService } from '../services/@';
+import { FirebaseService, SystemService } from '../services/@';
+import { updateProfile } from 'firebase/auth';
+import { doc, setDoc } from 'firebase/firestore';
 
 
 /*  Component logic
@@ -18,10 +19,6 @@ export default function () {
     const [ name, setName ] = useState( '' );
     const [ pict, setPict ] = useState( '' );
 
-    //  utils
-    const pickImage = async () => {
-        SystemService.pickInage().then( res => !res.cancelled && setPict( res.uri ));
-    }
 
 
 /*  Component layout
@@ -50,7 +47,7 @@ return (
     }} >{ 'Please provide your name, and verify your email.' }</Text>
 
     <TouchableOpacity
-        onPress={ pickImage }
+        onPress={ () => SystemService.pickInage().then( res => !res.cancelled && setPict( res.uri )) }
         style={{
             width: 192,
             height: 192,
@@ -103,7 +100,22 @@ return (
         <View style={{ marginTop: 20 }} >
         <Button
             disabled={ !name || !pict }
-            onPress={ () => {} }
+            onPress={ async () => {
+
+                //  get image data
+                let imageData = !!pict && await SystemService.upload( pict, 'profilePicture', `images/${ user?.uid }` );
+
+                //  update user data
+                if( !!imageData ) await Promise.all([
+                    FirebaseService.update( name, imageData.imageURL ),
+                    FirebaseService.setDoc( 'user', {
+                        email: user?.email,
+                        displayName: name,
+                        photoURL: imageData.imageURL
+                    }),
+                ]);
+
+            }}
             title='Next'
             color='green'
         />
