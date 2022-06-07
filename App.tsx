@@ -29,7 +29,9 @@ return (
 {
     !!user
     ?   <>
-        {/* <Stack.Screen name='Home' component={ Home } /> */}
+        { !user.displayName && <Stack.Screen name='Profile' component={ Profile } /> }
+
+        <Stack.Screen name='Home' component={ Home } />
         <Stack.Screen name='Profile' component={ Profile } />
     </>
     :   <>

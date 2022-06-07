@@ -6,11 +6,12 @@ import { useAppContext } from '../contexts/@';
 import { FirebaseService, SystemService } from '../services/@';
 import { updateProfile } from 'firebase/auth';
 import { doc, setDoc } from 'firebase/firestore';
+import { NativeStackScreenProps } from '@react-navigation/native-stack';
 
 
 /*  Component logic
 /*   *   *   *   *   *   *   *   *   *   */
-export default function () {
+export default function ( prop: NativeStackScreenProps<any, 'Profile'> ) {
 
     //  use context
     const { user } = useAppContext();
@@ -113,7 +114,7 @@ return (
                         displayName: name,
                         photoURL: imageData.imageURL
                     }),
-                ]);
+                ]).then(() => prop.navigation.navigate( 'Home' ));
 
             }}
             title='Next'
