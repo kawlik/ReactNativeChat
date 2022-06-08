@@ -2,11 +2,9 @@ import { useState } from 'react';
 import { Button, Image, Text, TextInput, TouchableOpacity, View } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { MaterialIcons, AntDesign } from '@expo/vector-icons';
+import { NativeStackScreenProps } from '@react-navigation/native-stack';
 import { useAppContext } from '../contexts/@';
 import { FirebaseService, SystemService } from '../services/@';
-import { updateProfile } from 'firebase/auth';
-import { doc, setDoc } from 'firebase/firestore';
-import { NativeStackScreenProps } from '@react-navigation/native-stack';
 
 
 /*  Component logic
