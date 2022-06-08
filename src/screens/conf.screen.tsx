@@ -12,7 +12,7 @@ import { FirebaseService, SystemService } from '../services/@';
 export default function ( prop: NativeStackScreenProps<any, 'Profile'> ) {
 
     //  use context
-    const { user } = useAppContext();
+    const { user, lead } = useAppContext();
 
     //  use state
     const [ name, setName ] = useState( '' );
@@ -36,7 +36,7 @@ return (
         fontSize: 28,
         color: 'grey',
     }} >
-        Profile info <AntDesign name='user' size={28} color='green' />
+        Profile info <AntDesign name='user' size={28} color={lead} />
     </Text>
     
     <Text style={{
@@ -78,7 +78,7 @@ return (
             placeholder='Your name'
             style={{
                 borderBottomWidth: 1,
-                borderColor: 'green',
+                borderColor: lead,
                 padding: 5,
                 width: 260,
             }}
@@ -90,7 +90,7 @@ return (
             placeholder='Your email'
             style={{
                 borderBottomWidth: 1,
-                borderColor: 'green',
+                borderColor: lead,
                 padding: 5,
                 width: 260,
             }}
@@ -116,7 +116,7 @@ return (
 
             }}
             title='Next'
-            color='green'
+            color={lead}
         />
         </View>
 

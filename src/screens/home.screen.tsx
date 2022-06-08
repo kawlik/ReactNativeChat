@@ -1,5 +1,6 @@
 import { MaterialCommunityIcons } from '@expo/vector-icons';
 import { createMaterialBottomTabNavigator } from '@react-navigation/material-bottom-tabs';
+import { useAppContext } from '../contexts/@';
 import { Chats, Photo } from '../pages/@';
 
 
@@ -12,11 +13,14 @@ const Tab = createMaterialBottomTabNavigator();
 /*   *   *   *   *   *   *   *   *   *   */
 export default function () {
 
+    //  use context
+    const { lead } = useAppContext();
+
 
 /*  Component layout
 /*   *   *   *   *   *   *   *   *   *   */
 return (
-<Tab.Navigator activeColor='green' inactiveColor='lightgrey' barStyle={{
+<Tab.Navigator activeColor={lead} barStyle={{
     backgroundColor: 'white',
 }} >
 

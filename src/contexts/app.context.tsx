@@ -8,6 +8,7 @@ import { FirebaseService } from '../services/@';
 export interface Context {
 
     //  required
+    lead: 'green'|'blue',
     user: User|null
 
     //  optional
@@ -16,7 +17,7 @@ export interface Context {
 
 /*  Define Context
 /*   *   *   *   *   *   *   *   *   *   */
-export const ctx = createContext<Context>({ user: null });
+export const ctx = createContext<Context>({ lead: 'green', user: null });
 export function useAppContext() {
     return useContext( ctx );
 }
@@ -28,7 +29,8 @@ export function AppProvider( prop: {
     children: JSX.Element | JSX.Element[]
 }) {
 
-    //  use user state
+    //  use states
+    const [ lead, setLead ] = useState<'green'|'blue'>( 'green' );
     const [ user, setUser ] = useState<User|null>( null );
 
 
@@ -46,6 +48,7 @@ export function AppProvider( prop: {
 
 return(
 <ctx.Provider value={{
+    lead: lead,
     user: user,
 }} >
 

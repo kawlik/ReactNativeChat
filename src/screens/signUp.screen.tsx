@@ -1,14 +1,18 @@
 import { MaterialCommunityIcons } from '@expo/vector-icons';
-import { NativeStackScreenProps } from '@react-navigation/native-stack';
+import { NativeStackScreenProps } from '@react-navigation/native-stack'
 import { useState } from 'react';
 import { Button, Text, TextInput, TouchableOpacity, View } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
+import { useAppContext } from '../contexts/@';
 import { FirebaseService } from '../services/@';
 
 
 /*  Component logic
 /*   *   *   *   *   *   *   *   *   *   */
 export default function ( prop: NativeStackScreenProps<any, 'SignUp'> ) {
+
+    //  use context
+    const { lead } = useAppContext();
 
     //  use state
     const [ email, setEmail ] = useState( '' );
@@ -38,7 +42,7 @@ return (
         fontSize: 28,
         color: 'grey',
     }} >
-        Nice to meet You! <MaterialCommunityIcons name='handshake-outline' size={28} color='green' />
+        Nice to meet You! <MaterialCommunityIcons name='handshake-outline' size={28} color={lead} />
     </Text>
 
     <View style={{
@@ -54,7 +58,7 @@ return (
             placeholder='Email'
             style={{
                 borderBottomWidth: 1,
-                borderColor: 'green',
+                borderColor: lead,
                 padding: 5,
                 width: 260,
             }}
@@ -67,7 +71,7 @@ return (
             placeholder='Password'
             style={{
                 borderBottomWidth: 1,
-                borderColor: 'green',
+                borderColor: lead,
                 padding: 5,
                 width: 260,
             }}
@@ -78,7 +82,7 @@ return (
             disabled={ !isValid }
             onPress={ tryAuth }
             title='Sign Up'
-            color='green'
+            color={lead}
         />
         </View>
 

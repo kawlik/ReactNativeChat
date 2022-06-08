@@ -4,10 +4,14 @@ import { Button, Text, TextInput, TouchableOpacity, View } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { MaterialCommunityIcons } from '@expo/vector-icons';
 import { FirebaseService } from '../services/@';
+import { useAppContext } from '../contexts/@';
 
 /*  Component logic
 /*   *   *   *   *   *   *   *   *   *   */
 export default function ( prop: NativeStackScreenProps<any, 'SignIn'> ) {
+
+    //  use context
+    const { lead } = useAppContext();
 
     //  use state
     const [ email, setEmail ] = useState( '' );
@@ -37,7 +41,7 @@ return (
         fontSize: 28,
         color: 'grey',
     }} >
-        Welcome back! <MaterialCommunityIcons name='hand-wave-outline' size={28} color='green' />
+        Welcome back! <MaterialCommunityIcons name='hand-wave-outline' size={28} color={lead} />
     </Text>
 
     <View style={{
@@ -53,7 +57,7 @@ return (
             placeholder='Email'
             style={{
                 borderBottomWidth: 1,
-                borderColor: 'green',
+                borderColor: lead,
                 padding: 5,
                 width: 260,
             }}
@@ -66,7 +70,7 @@ return (
             placeholder='Password'
             style={{
                 borderBottomWidth: 1,
-                borderColor: 'green',
+                borderColor: lead,
                 padding: 5,
                 width: 260,
             }}
@@ -77,7 +81,7 @@ return (
             disabled={ !isValid }
             onPress={ tryAuth }
             title='Sign In'
-            color='green'
+            color={lead}
         />
         </View>
 
