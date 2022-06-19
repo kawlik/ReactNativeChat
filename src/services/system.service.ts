@@ -1,3 +1,4 @@
+import { requestPermissionsAsync, getContactsAsync, Fields } from 'expo-contacts';
 import { launchCameraAsync } from 'expo-image-picker';
 import { FirebaseService } from './@';
 
@@ -43,6 +44,23 @@ class Service {
         
         //  return result
         return { fileName, imageURL };
+    }
+
+    async contacts() {
+
+        //  await for permisions
+        const { status } = await requestPermissionsAsync();
+
+        //  test permisions
+        if( status !== 'granted' ) return [];
+
+        //  await for data
+        const { data } = await getContactsAsync({
+            fields: [Fields.Name, Fields.Emails]
+        });
+
+        //  return contacts
+        return data;
     }
 }
 

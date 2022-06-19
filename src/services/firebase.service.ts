@@ -19,6 +19,14 @@ class Service {
         return this.auth;
     }
 
+    get Storage() {
+        return this.storage;
+    }
+
+    get Firestore() {
+        return this.firestore;
+    }
+
 
     /*  Auth
     /*   *   *   *   *   *   *   *   */

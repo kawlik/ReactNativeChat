@@ -1,10 +1,9 @@
-import { createMaterialTopTabNavigator } from '@react-navigation/material-top-tabs';
 import { NavigationContainer } from '@react-navigation/native';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import { StatusBar } from 'expo-status-bar';
 import { SafeAreaProvider } from 'react-native-safe-area-context';
 import { AppProvider, useAppContext } from './src/contexts/@';
-import { Conf, Home, SignIn, SignUp } from './src/screens/@';
+import { Conf, Cont, Home, SignIn, SignUp } from './src/screens/@';
 
 
 /*  Initialize navigation stack
@@ -33,6 +32,7 @@ return (
 
         <Stack.Screen name='Home' component={ Home } />
         <Stack.Screen name='Conf' component={ Conf } />
+        <Stack.Screen name='Cont' component={ Cont } />
     </>
     :   <>
         <Stack.Screen name='SignIn' component={ SignIn } />

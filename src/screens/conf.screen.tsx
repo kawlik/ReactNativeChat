@@ -9,7 +9,7 @@ import { FirebaseService, SystemService } from '../services/@';
 
 /*  Component logic
 /*   *   *   *   *   *   *   *   *   *   */
-export default function ( prop: NativeStackScreenProps<any, 'Profile'> ) {
+export default function ( prop: NativeStackScreenProps<any, 'Conf'> ) {
 
     //  use context
     const { user, lead } = useAppContext();
