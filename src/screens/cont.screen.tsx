@@ -1,6 +1,6 @@
 import { NativeStackScreenProps } from '@react-navigation/native-stack';
 import { useEffect, useState } from 'react';
-import { ScrollView, Text } from 'react-native';
+import { ScrollView } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { Contact } from '../components/@';
 import { SystemService } from '../services/@';
@@ -11,9 +11,7 @@ import { SystemService } from '../services/@';
 export default function ( prop: NativeStackScreenProps<any, 'Cont'> ) {
 
     //  common navigate func
-    const navigate = async () => {
-
-    }
+    const navigate = ( email: string ) => prop.navigation.navigate( 'Chat', { email });
 
     //  use state
     const [ contacts, setContacts ] = useState<Array<any>>( [] );
@@ -35,7 +33,7 @@ return (
 <ScrollView style={{ padding: 10 }} >
 {
 
-    contacts.map(( contact ) => <Contact navigate={ () => navigate() } email={ contact.emails[0].email || '' } name={ contact.name } key={ contact.id } /> )
+    contacts.map(( contact ) => <Contact navigate={ () => navigate( contact.emails[0].email ) } email={ contact.emails[0].email } name={ contact.name } key={ contact.id } /> )
 }
 </ScrollView>
 </SafeAreaView>

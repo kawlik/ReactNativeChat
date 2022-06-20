@@ -2,7 +2,7 @@ import { MaterialCommunityIcons } from '@expo/vector-icons';
 import { createMaterialBottomTabNavigator } from '@react-navigation/material-bottom-tabs';
 import { NativeStackScreenProps } from '@react-navigation/native-stack';
 import { useAppContext } from '../contexts/@';
-import { Chats, Photo } from '../pages/@';
+import { Chats, Setings } from '../pages/@';
 
 
 /*  Component Navigation
@@ -25,8 +25,8 @@ return (
     backgroundColor: 'white',
 }} >
 
-    <Tab.Screen {...prop} name='Chats' component={ Chats } options={{ tabBarIcon: ({ color }) => <MaterialCommunityIcons name='forum' color={color} size={26} /> }} />
-    <Tab.Screen {...prop} name='Photo' component={ Photo } options={{ tabBarIcon: ({ color }) => <MaterialCommunityIcons name='camera' color={color} size={26} /> }} />
+    <Tab.Screen {...prop} name='Chats' component={ Chats } options={{ tabBarIcon: ({ color }) => <MaterialCommunityIcons name='forum' color={color} size={28} /> }} />
+    <Tab.Screen {...prop} name='Setings' component={ Setings } options={{ tabBarIcon: ({ color }) => <MaterialCommunityIcons name='cog-outline' color={color} size={28} /> }} />
     
 </Tab.Navigator>
 )}

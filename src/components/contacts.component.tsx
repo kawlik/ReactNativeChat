@@ -30,7 +30,7 @@ return (
     right: 20,
 }} >
 
-    <MaterialCommunityIcons name='android-messages' size={ 30 } color='white' />
+    <MaterialCommunityIcons name='android-messages' size={28} color='white' />
 
 </TouchableOpacity>
 )}

@@ -3,7 +3,7 @@ import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import { StatusBar } from 'expo-status-bar';
 import { SafeAreaProvider } from 'react-native-safe-area-context';
 import { AppProvider, useAppContext } from './src/contexts/@';
-import { Conf, Cont, Home, SignIn, SignUp } from './src/screens/@';
+import { Chat, Conf, Cont, Home, SignIn, SignUp } from './src/screens/@';
 
 
 /*  Initialize navigation stack
@@ -17,6 +17,8 @@ export function App() {
 
     //  use context
     const { user } = useAppContext();
+
+    console.log( user );
     
 
 /*  Component layout
@@ -28,10 +30,10 @@ return (
 {
     !!user
     ?   <>
-        { !user.displayName && <Stack.Screen name='Conf' component={ Conf } /> }
+        { !user?.displayName && <Stack.Screen name='Conf' component={ Conf } /> }
 
         <Stack.Screen name='Home' component={ Home } />
-        <Stack.Screen name='Conf' component={ Conf } />
+        <Stack.Screen name='Chat' component={ Chat } />
         <Stack.Screen name='Cont' component={ Cont } />
     </>
     :   <>

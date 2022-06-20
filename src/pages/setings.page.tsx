@@ -14,7 +14,7 @@ return (
 <SafeAreaView  style={{ flex: 1 }} >
 <ScrollView style={{ padding: 10 }} >
 
-    <Text>Hello! - Photo</Text>
+    <Text>Hello! - Setings</Text>
 
 </ScrollView>
 </SafeAreaView>

@@ -1,2 +1,2 @@
 export { default as Chats } from './chats.page';
-export { default as Photo } from './photo.page';
+export { default as Setings } from './setings.page';
