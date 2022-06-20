@@ -8,16 +8,17 @@ import { FirebaseService } from '../services/@';
 export interface Context {
 
     //  required
-    lead: 'green'|'blue',
-    user: User|null
+    user: User | null
+    lead: string,
 
     //  optional
+    setLead?: ( color: string ) => void,
 };
 
 
 /*  Define Context
 /*   *   *   *   *   *   *   *   *   *   */
-export const ctx = createContext<Context>({ lead: 'green', user: null });
+export const ctx = createContext<Context>({ user: null, lead: 'green' });
 export function useAppContext() {
     return useContext( ctx );
 }
@@ -30,7 +31,7 @@ export function AppProvider( prop: {
 }) {
 
     //  use states
-    const [ lead, setLead ] = useState<'green'|'blue'>( 'green' );
+    const [ lead, setLead ] = useState<string>( 'green' );
     const [ user, setUser ] = useState<User|null>( null );
 
 
@@ -48,8 +49,24 @@ export function AppProvider( prop: {
 
 return(
 <ctx.Provider value={{
+    
     lead: lead,
     user: user,
+
+    setLead: ( color: string ) => {
+        switch( color ) {
+
+            //  optional colors
+            case '#00ff00': return setLead( '#00ff00' );
+            case '#00ff00': return setLead( '#00ff00' );
+            case '#00ff00': return setLead( '#00ff00' );
+            case '#00ff00': return setLead( '#00ff00' );
+            case '#00ff00': return setLead( '#00ff00' );
+
+            //  default color
+            default:        return setLead( 'green' );
+        }
+    },
 }} >
 
     { prop.children }

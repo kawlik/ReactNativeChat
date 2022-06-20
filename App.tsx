@@ -17,8 +17,6 @@ export function App() {
 
     //  use context
     const { user } = useAppContext();
-
-    console.log( user );
     
 
 /*  Component layout

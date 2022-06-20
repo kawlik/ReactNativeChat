@@ -46,7 +46,7 @@ return (
     }} >{ 'Please provide your name, and verify your email.' }</Text>
 
     <TouchableOpacity
-        onPress={ () => SystemService.pickInage().then( res => !res.cancelled && setPict( res.uri )) }
+        onPress={ () => SystemService.pickImage().then( res => !res.cancelled && setPict( res.uri )) }
         style={{
             width: 192,
             height: 192,

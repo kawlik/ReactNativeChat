@@ -11,7 +11,7 @@ class Service {
 
     ) { }
 
-    async pickInage() {
+    async pickImage() {
         return await launchCameraAsync();
     }
 

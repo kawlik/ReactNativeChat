@@ -72,6 +72,8 @@ export default function ( prop: NativeStackScreenProps<any, 'Chat'> ) {
             //  get chats
             const chat = snapshot.docs.filter(( doc ) => doc.data()?.last ).map(( doc ) => ({ ...doc.data(), ref: doc.ref }));
 
+            console.log( chat );
+            
             //  set chats
             if( !!chat.length ) {
 
