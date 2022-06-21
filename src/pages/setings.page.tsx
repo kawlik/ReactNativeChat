@@ -5,24 +5,6 @@ import { SafeAreaView } from 'react-native-safe-area-context';
 import { useAppContext } from '../contexts/@';
 import { FirebaseService } from '../services/@';
 
-const DATA = [
-    {
-      title: "Main dishes",
-      data: ["Pizza", "Burger", "Risotto"]
-    },
-    {
-      title: "Sides",
-      data: ["French Fries", "Onion Rings", "Fried Shrimps"]
-    },
-    {
-      title: "Drinks",
-      data: ["Water", "Coke", "Beer"]
-    },
-    {
-      title: "Desserts",
-      data: ["Cheese Cake", "Ice Cream"]
-    },
-  ];
 
 /*  Component logic
 /*   *   *   *   *   *   *   *   *   *   */
@@ -68,15 +50,31 @@ return (
 
     <SectionList
 
-        sections={DATA}
+        sections={[
+            {
+                title: 'Color',
+                data: [
+                    { color: '#dc3545', name: 'Red' },
+                    { color: '#ffc107', name: 'Yellow' },
+                    { color: '#32cd32', name: 'Lime' },
+                    { color: '#008000', name: 'Green' },
+                    { color: '#0dcaf0', name: 'Azure' },
+                    { color: '#0d6efd', name: 'Blue' },
+                    { color: '#6f42c1', name: 'Purple' },
+                ]
+            }
+        ]}
 
-        keyExtractor={(item, index ) => item + index }
-        style={{ padding: 20 }}
+        
+        renderItem={({ item }) => (
+            <View style={{ marginVertical: 5 }}><Button title={ item.name } color={ item.color } onPress={ () => !!setLead && setLead( item.color ) } /></View>
+        )}
 
-        renderItem={({ item }) => <View style={{ marginVertical: 2 }}><Button title={ item } /></View> }
         renderSectionHeader={({ section: { title } }) => (
             <Text style={{ fontSize: 20, fontWeight: '400' }}>{ title }</Text>
         )}
+
+        style={{ padding: 20 }}
     />
 
 </SafeAreaView>

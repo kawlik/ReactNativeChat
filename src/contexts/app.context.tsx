@@ -1,5 +1,6 @@
 import { onAuthStateChanged, User } from 'firebase/auth';
 import { createContext, useContext, useEffect, useState } from 'react';
+import { AsyncStorage } from 'react-native';
 import { FirebaseService } from '../services/@';
 
 
@@ -40,6 +41,13 @@ export function AppProvider( prop: {
 
         const unsubscribeAuthStateChanged = onAuthStateChanged( FirebaseService.Auth, ( user ) => setUser( user ));
 
+        AsyncStorage.getItem( 'lead', ( error, color ) => {
+
+            if( error ) return console.error( 'Async storage has failed!', error );
+
+            setLead( color || 'green' );
+        });
+
     return () => {
 
         unsubscribeAuthStateChanged();
@@ -54,18 +62,12 @@ return(
     user: user,
 
     setLead: ( color: string ) => {
-        switch( color ) {
 
-            //  optional colors
-            case '#00ff00': return setLead( '#00ff00' );
-            case '#00ff00': return setLead( '#00ff00' );
-            case '#00ff00': return setLead( '#00ff00' );
-            case '#00ff00': return setLead( '#00ff00' );
-            case '#00ff00': return setLead( '#00ff00' );
+        //  set in app
+        setLead( color );
 
-            //  default color
-            default:        return setLead( 'green' );
-        }
+        //  set in storage
+        AsyncStorage.setItem( 'lead', color ).catch( err => console.error( 'Async storage has failed!', err ));
     },
 }} >
 
