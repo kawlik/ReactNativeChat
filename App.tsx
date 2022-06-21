@@ -1,9 +1,15 @@
 import { NavigationContainer } from '@react-navigation/native';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import { StatusBar } from 'expo-status-bar';
+import { LogBox } from 'react-native';
 import { SafeAreaProvider } from 'react-native-safe-area-context';
 import { AppProvider, useAppContext } from './src/contexts/@';
 import { Chat, Conf, Cont, Home, SignIn, SignUp } from './src/screens/@';
+
+
+/*  Configure logging
+/*   *   *   *   *   *   *   *   *   *   */
+LogBox.ignoreAllLogs();
 
 
 /*  Initialize navigation stack
