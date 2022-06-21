@@ -1,6 +1,8 @@
 import { MaterialCommunityIcons } from '@expo/vector-icons';
-import { Text, TouchableOpacity, View } from 'react-native';
+import { useEffect, useState } from 'react';
+import { Image, Text, TouchableOpacity, View } from 'react-native';
 import { useAppContext } from '../contexts/app.context';
+import { FirebaseService } from '../services/@';
 
 
 /*  Component logic
@@ -15,6 +17,24 @@ export default function ( prop: {
     //  use context
     const { lead } = useAppContext();
 
+    //  use stae
+    const [ displayName, setDisplayName ] = useState( '' );
+    const [ photoURL, setPhotoURL ] = useState( '' );
+
+    //  use effect
+    useEffect(() => {
+
+        FirebaseService.getDoc('user', prop.email)
+        .then( res => {
+            !!res?.displayName  && setDisplayName( res.displayName );
+            !!res?.photoURL     && setPhotoURL( res.photoURL );
+        })
+        .catch( err => console.error( err ));
+
+    return () => {
+
+    }});
+
 
 /*  Component layout
 /*   *   *   *   *   *   *   *   *   *   */
@@ -28,9 +48,15 @@ return (
 
     }
 
-    <View>
+    {
+        !!photoURL
+        ?   <Image source={{ uri: photoURL }} style={{ width: 36, height: 36, borderRadius: 100 }} />
+        :   <MaterialCommunityIcons name='account-outline' size={36} color='grey' />
+    }
 
-        <Text style={{ fontWeight: '800', fontSize: 14 }} >{ prop.email }</Text>
+    <View style={{ marginLeft: 10 }} >
+
+        <Text style={{ fontWeight: '800', fontSize: 14 }} >{ !!displayName ? displayName + '\ ' + `(${ prop.email })` : prop.email }</Text>
 
         { !!prop.name && <Text style={{ fontWeight: '400', fontSize: 12, fontStyle: 'italic' }} >{ prop.name.length > 40 ? prop.name.slice( 0, 40 ) + ' ...' : prop.name }</Text> }
 

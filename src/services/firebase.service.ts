@@ -1,6 +1,6 @@
 import { createUserWithEmailAndPassword, getAuth, signInWithEmailAndPassword, updateProfile } from 'firebase/auth';
 import { getDownloadURL, getStorage, ref, StorageReference, uploadBytes, UploadResult } from 'firebase/storage';
-import { doc, initializeFirestore, setDoc } from 'firebase/firestore';
+import { doc, collection, initializeFirestore, query, setDoc, where, getDocs } from 'firebase/firestore';
 import { FirebaseApp } from "../configs/@";
 
 
@@ -69,8 +69,12 @@ class Service {
     /*  Firestore
     /*   *   *   *   *   *   *   *   */
 
-    setDoc(collection: 'user', payload: any) {
-        return setDoc( doc( this.firestore, collection, this.auth.currentUser?.uid! ), payload );
+    setDoc(col: 'user', payload: any) {
+        return setDoc( doc( this.firestore, col, this.auth.currentUser?.uid! ), payload );
+    }
+
+    async getDoc(col: 'user', email: string) {
+        return ( await getDocs( query( collection( this.firestore, col ), where( 'email', '==', `${ email }` )))).docs.map(( doc ) => ({ ...doc.data() }))[0];
     }
 }
 

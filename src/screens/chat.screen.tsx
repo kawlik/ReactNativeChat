@@ -2,11 +2,11 @@ import { MaterialCommunityIcons } from '@expo/vector-icons';
 import { NativeStackScreenProps } from '@react-navigation/native-stack';
 import { DocumentReference, onSnapshot } from 'firebase/firestore';
 import { useEffect, useState } from 'react';
-import { ScrollView, Text, TextInput, Touchable, TouchableOpacity, View } from 'react-native';
+import { Image, ScrollView, Text, TextInput, Touchable, TouchableOpacity, View } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { Message } from '../components/@';
 import { useAppContext } from '../contexts/@';
-import { ChatService } from '../services/@';
+import { ChatService, FirebaseService } from '../services/@';
 
 
 
@@ -31,6 +31,24 @@ export default function ( prop: NativeStackScreenProps<any, 'Chat'> ) {
         users: Array<string>,
         ref: DocumentReference,
     }|null>( null );
+
+    //  use stae
+    const [ displayName, setDisplayName ] = useState( '' );
+    const [ photoURL, setPhotoURL ] = useState( '' );
+
+    //  use effect
+    useEffect(() => {
+
+        FirebaseService.getDoc('user', prop.route.params?.email )
+        .then( res => {
+            !!res?.displayName  && setDisplayName( res.displayName );
+            !!res?.photoURL     && setPhotoURL( res.photoURL );
+        })
+        .catch( err => console.error( err ));
+
+    return () => {
+
+    }});
 
 
     //  post message
@@ -72,8 +90,6 @@ export default function ( prop: NativeStackScreenProps<any, 'Chat'> ) {
             //  get chats
             const chat = snapshot.docs.filter(( doc ) => doc.data()?.last ).map(( doc ) => ({ ...doc.data(), ref: doc.ref }));
 
-            console.log( chat );
-            
             //  set chats
             if( !!chat.length ) {
 
@@ -101,9 +117,19 @@ return (
         padding: 10,
     }} >
 
-        <MaterialCommunityIcons name='account-outline' size={28} color={lead} style={{ marginEnd: 10 }} />
+    {
+        !!photoURL
+        ?   <Image source={{ uri: photoURL }} style={{ width: 44, height: 44, borderRadius: 100 }} />
+        :   <MaterialCommunityIcons name='account-outline' size={44} color='grey' />
+    }
 
-        <Text style={{ fontSize: 15, fontWeight: '600' }} >{ prop.route.params?.email }</Text>
+        <View style={{ marginLeft: 15 }} >
+
+            <Text style={{ fontWeight: '600', fontSize: 15 }} >{ prop.route.params?.email }</Text>
+
+            <Text style={{ fontWeight: '400', fontSize: 13, fontStyle: 'italic' }} >{ displayName }</Text>
+
+        </View>
 
     </View>
 

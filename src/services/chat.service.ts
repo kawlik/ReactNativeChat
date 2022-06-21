@@ -1,4 +1,4 @@
-import { addDoc, arrayUnion, collection, doc, DocumentReference, getDocs, query, updateDoc, where } from 'firebase/firestore';
+import { addDoc, arrayUnion, collection, doc, DocumentReference, getDoc, getDocs, query, updateDoc, where } from 'firebase/firestore';
 import { FirebaseService } from './@';
 
 
@@ -9,6 +9,7 @@ class Service {
     constructor(
         private readonly chats = () => collection( FirebaseService.Firestore, 'chat' ),
     ) { }
+
 
     /*  Chat Queries
     /*   *   *   *   *   *   *   *   */
